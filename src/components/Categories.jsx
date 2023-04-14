@@ -1,14 +1,9 @@
-import React, { useState } from 'react'
+import React  from 'react'
 
-function Categories() {
+function Categories({valueStateOne, clickCategory}) {
 
-  const [indexCat, setIndex] = useState(0)
 
   const myCategoty = ['Все',"Мясные", "Вегатарианская", "Гриль", "Острые", "Закрытые "]
-
-  const onClickCategory = (index) => {
-    setIndex(index)
-  }
 
 
   return (
@@ -18,8 +13,8 @@ function Categories() {
                 myCategoty.map(( value,index)=> (
                   <li
                   key={value} 
-                  onClick={()=> onClickCategory(index)} 
-                  className={indexCat === index ? 'active' : ''}>{value}</li>
+                  onClick={()=> clickCategory(index)} 
+                  className={valueStateOne === index ? 'active' : ''}>{value}</li>
                 ))
               }
             </ul>

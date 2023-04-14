@@ -1,16 +1,24 @@
 import React, { useState } from 'react'
 
-function Sort() {
+function Sort({valueStateTwo,clickToSort}) {
 
+  const typesSort = [
+    {name: "популярности(DESK)", sortItems: "rating"},
+    {name: "популярности(ASK)", sortItems: "-rating"},
+    {name: "цене(DESK)", sortItems: "price"},
+    {name: "цене(ASK)", sortItems: "-price"},
+    {name: "алфавиту(DESK)", sortItems: "title"},
+    {name: "алфавиту(ASK)", sortItems: "-title"}
+  ]
 
-  const typesSort = ['популярности', 'цене', 'алфавиту']
   const [openModal, setOpenModal] = useState(false)
-  const [selected, setSelected] = useState(0)
 
   const selectCategoty = (i) => {
-    setSelected(i)
+    clickToSort(i)
     setOpenModal(false)
   }
+
+ 
 
   return (
     <div className="sort">
@@ -28,17 +36,17 @@ function Sort() {
                 />
               </svg>
               <b>Сортировка по:</b>
-              <span onClick={() => setOpenModal(!openModal)}>{typesSort[selected]}</span>
+              <span onClick={() => setOpenModal(!openModal)}>{valueStateTwo.name}</span>
             </div>
             {openModal && (<div className="sort__popup">
               <ul>
                 {
-                  typesSort.map((sort,i)=> (
+                  typesSort?.map((name,i)=> ( 
                     <li
-                    key={sort}
-                    onClick={()=> selectCategoty(i)}
-                    className={selected === i ? "active" : ''}
-                    >{sort}</li>
+                    key={name}
+                    onClick={()=> selectCategoty(name)}
+                    className={valueStateTwo.sortItems === name.sortItems ? "active" : ''}
+                    >{name.name}</li>
                   ))
                 }
                </ul>
