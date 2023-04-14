@@ -41,12 +41,12 @@ function Sort({valueStateTwo,clickToSort}) {
             {openModal && (<div className="sort__popup">
               <ul>
                 {
-                  typesSort?.map((name,i)=> ( 
+                  typesSort?.map((obj,index)=> ( 
                     <li
-                    key={name}
-                    onClick={()=> selectCategoty(name)}
-                    className={valueStateTwo.sortItems === name.sortItems ? "active" : ''}
-                    >{name.name}</li>
+                    key={index}
+                    onClick={()=> selectCategoty(obj)}
+                    className={valueStateTwo.sortItems === obj.sortItems ? "active" : ''}
+                    >{obj.name}</li>
                   ))
                 }
                </ul>

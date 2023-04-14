@@ -5,7 +5,7 @@ import SkeletonPizza from "../components/Pizzas/SkeletonPizza";
 import Sort from "../components/Sort";
 import { useEffect, useState } from "react";
 
-function Home() {
+function Home({searchValue}) {
 
   const [myPizzas, setMyPizzas] = useState([])
   const [pizzasLoanding, setPizzaLoanding] = useState(true)
@@ -15,26 +15,20 @@ function Home() {
     sortItems: "rating"},
     )
 
-
-  useEffect (()=> {
-    setPizzaLoanding(true)
-
-    fetch(`https://642ea8662b883abc64138fa3.mockapi.io/items?${
-      selectedCategories > 0 ? `category=${selectedCategories}` : ''
-      }sort=${sortPizzas.sortItems.replace("-", "")}
-      &order${sortPizzas.sortItems.includes("-") ? "asc" : "desc"}`) 
-      
-.then((res) => {
-      return res.json()
-      })
-      .then((arr)=> {
-        setTimeout(() => {
-          setMyPizzas(arr)
-          setPizzaLoanding(false)
-        }, 2000);
-      })
-      window.scrollTo(0, 0)
-  },[selectedCategories, sortPizzas])
+    useEffect(() => {
+      setPizzaLoanding(true);
+      fetch(`https://642ea8662b883abc64138fa3.mockapi.io/items?${
+        selectedCategories > 0 ? `category=${selectedCategories}&` : ''
+      } &sortBy=${sortPizzas.sortItems.replace('-', '')}&order=${
+        sortPizzas.sortItems.includes('-') ? 'asc' : 'desc'
+      }`)
+        .then((res) => res.json())
+        .then((arr) => {
+          setMyPizzas(arr);
+          setPizzaLoanding(false);
+          window.scrollTo(0, 0);
+        });
+    }, [selectedCategories, sortPizzas]);
   
 
   return (
@@ -53,7 +47,13 @@ function Home() {
           {
             pizzasLoanding 
             ? Array(9).fill().map((_,index)=>   <SkeletonPizza key={index}/>)
-            : myPizzas.map((obj,value) => (<PizzaBlock key={value} {... obj}
+            : myPizzas.filter(obj => {
+              if(obj.title.includes(searchValue)){
+                 return true
+                }
+              return false
+               }) 
+              .map((index,value) => (<PizzaBlock key={value} {... index}
               />
             ))
           }
@@ -63,3 +63,6 @@ function Home() {
 }
 
 export default Home
+
+
+ 
