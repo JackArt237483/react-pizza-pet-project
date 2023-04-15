@@ -5,9 +5,12 @@ import PizzaBlock from "../components/Pizzas/PizzaBlock"
 import SkeletonPizza from "../components/Pizzas/SkeletonPizza";
 import Sort from "../components/Sort";
 import Pagination from '../components/pagination/Pagination';
+import { AppHead } from '../App';
 
-function Home({searchValue}) {
 
+function Home() {
+  
+  const {searchValue} = React.useContext(AppHead)
   const [myPizzas, setMyPizzas] = useState([])
   const [pizzasLoanding, setPizzaLoanding] = useState(true)
   const [selectedCategories, setSelectCategories] = useState(0)
@@ -19,7 +22,7 @@ function Home({searchValue}) {
 
     useEffect(() => {
       setPizzaLoanding(true);
-      fetch(`https://642ea8662b883abc64138fa3.mockapi.io/items?page=${changePages}&limit=2&${
+      fetch(`https://642ea8662b883abc64138fa3.mockapi.io/items?page=${changePages}&limit=4&${
         selectedCategories > 0 ? `category=${selectedCategories}&` : ''
       } &sortBy=${sortPizzas.sortItems.replace('-', '')}&order=${
         sortPizzas.sortItems.includes('-') ? 'asc' : 'desc'
