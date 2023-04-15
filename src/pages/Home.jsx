@@ -1,15 +1,17 @@
 import React from 'react'
+import { useEffect, useState } from "react";
 import Categories from "../components/Categories"
 import PizzaBlock from "../components/Pizzas/PizzaBlock"
 import SkeletonPizza from "../components/Pizzas/SkeletonPizza";
 import Sort from "../components/Sort";
-import { useEffect, useState } from "react";
+import Pagination from '../components/pagination/Pagination';
 
 function Home({searchValue}) {
 
   const [myPizzas, setMyPizzas] = useState([])
   const [pizzasLoanding, setPizzaLoanding] = useState(true)
   const [selectedCategories, setSelectCategories] = useState(0)
+  const [changePages, setChangePages] = useState(0)
   const [sortPizzas, setSortPizzas] = useState({
     name: "популярности",
     sortItems: "rating"},
@@ -17,7 +19,7 @@ function Home({searchValue}) {
 
     useEffect(() => {
       setPizzaLoanding(true);
-      fetch(`https://642ea8662b883abc64138fa3.mockapi.io/items?${
+      fetch(`https://642ea8662b883abc64138fa3.mockapi.io/items?page=${changePages}&limit=2&${
         selectedCategories > 0 ? `category=${selectedCategories}&` : ''
       } &sortBy=${sortPizzas.sortItems.replace('-', '')}&order=${
         sortPizzas.sortItems.includes('-') ? 'asc' : 'desc'
@@ -28,7 +30,7 @@ function Home({searchValue}) {
           setPizzaLoanding(false);
           window.scrollTo(0, 0);
         });
-    }, [selectedCategories, sortPizzas]);
+    }, [selectedCategories, sortPizzas,changePages]);
   
 
   return (
@@ -58,6 +60,7 @@ function Home({searchValue}) {
             ))
           }
         </div>
+        <Pagination onChangePages={(number)=> setChangePages(number)}/>
       </div>
   )
 }
