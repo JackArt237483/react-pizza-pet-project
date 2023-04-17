@@ -33,7 +33,7 @@ function Home() {
           setPizzaLoanding(false);
           window.scrollTo(0, 0);
         });
-    }, [selectedCategories, sortPizzas,changePages]);
+    }, [selectedCategories,sortPizzas,changePages,searchValue]);
   
 
   return (
@@ -51,12 +51,12 @@ function Home() {
         <div className="content__items">
           {
             pizzasLoanding 
-            ? Array(9).fill().map((_,index)=>   <SkeletonPizza key={index}/>)
+            ? Array(9).fill().map((_,index)=><SkeletonPizza key={index}/>)
             : myPizzas.filter(obj => {
               if(obj.title.includes(searchValue)){
                  return true
                 }
-              return false
+                 return false
                }) 
               .map((index,value) => (<PizzaBlock key={value} {... index}
               />
