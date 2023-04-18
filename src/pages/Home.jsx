@@ -1,5 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from "react";
+import {useSelector,useDispatch} from "react-redux"
+import {setCategoryId} from '..//redux/slices/filterSlice'
 import Categories from "../components/Categories"
 import PizzaBlock from "../components/Pizzas/PizzaBlock"
 import SkeletonPizza from "../components/Pizzas/SkeletonPizza";
@@ -9,23 +11,30 @@ import { AppHead } from '../App';
 
 
 function Home() {
+
+  const dispatch = useDispatch()
+  const categotyID = useSelector((state)=> state.filter.categotyID)
+  const sortType = useSelector((state)=> state.filter.sort.sortItems)
+
   
+
+  console.log("click to me", categotyID)
+
   const {searchValue} = React.useContext(AppHead)
   const [myPizzas, setMyPizzas] = useState([])
   const [pizzasLoanding, setPizzaLoanding] = useState(true)
-  const [selectedCategories, setSelectCategories] = useState(0)
   const [changePages, setChangePages] = useState(0)
-  const [sortPizzas, setSortPizzas] = useState({
-    name: "популярности",
-    sortItems: "rating"},
-    )
+
+    const clickToValueCategory = (obj) => {
+      dispatch(setCategoryId(obj))
+    }
 
     useEffect(() => {
       setPizzaLoanding(true);
       fetch(`https://642ea8662b883abc64138fa3.mockapi.io/items?page=${changePages}&limit=4&${
-        selectedCategories > 0 ? `category=${selectedCategories}&` : ''
-      } &sortBy=${sortPizzas.sortItems.replace('-', '')}&order=${
-        sortPizzas.sortItems.includes('-') ? 'asc' : 'desc'
+         categotyID > 0 ? `category=${ categotyID}&` : ''
+      } &sortBy=${sortType.replace('-', '')}&order=${
+        sortType.includes('-') ? 'asc' : 'desc'
       }`)
         .then((res) => res.json())
         .then((arr) => {
@@ -33,19 +42,17 @@ function Home() {
           setPizzaLoanding(false);
           window.scrollTo(0, 0);
         });
-    }, [selectedCategories,sortPizzas,changePages,searchValue]);
+    }, [ categotyID,sortType,changePages,searchValue]);
   
 
   return (
        <div className="container">
         <div className="content__top">
           <Categories
-            valueStateOne={selectedCategories}
-            clickCategory={(i)=> setSelectCategories(i)}
+            valueStateOne={categotyID}
+            clickCategory={clickToValueCategory}
           />
-          <Sort
-          valueStateTwo={sortPizzas}
-          clickToSort={(i)=> setSortPizzas(i)}/>
+          <Sort/>
         </div>
         <h2 className="content__title">Все пиццы</h2>
         <div className="content__items">

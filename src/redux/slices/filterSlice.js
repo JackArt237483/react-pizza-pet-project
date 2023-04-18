@@ -1,24 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  value: 5
+   sort: {
+    name: "популярности",
+    sortItems: "rating"
+  },
+  categotyID: 0 
 }
 
-export const filterSlice = createSlice ({
+const filterSlice = createSlice({
   name: "filter",
   initialState,
-  reducers: {
-     increment: (state) => {
-        state.value += 1
-     },
-     decrement: (state) => {
-      state.value -= 1
-     },
-     incrementByAmount: (action, state)=> {
-        state.value += action.payload
-     }
-  }
+   reducers:{
+      setCategoryId(state,actions){
+           console.log("ClICK ME",actions)
+           state.categotyID = actions.payload
+      },
+      setSort(state,actions) {
+        state.sort = actions.payload
+      }
+   }
 })
 
-export const  {increment, decrement, incrementByAmount} = filterSlice.actions
+export const {setCategoryId,setSort} = filterSlice.actions
 export default filterSlice.reducer

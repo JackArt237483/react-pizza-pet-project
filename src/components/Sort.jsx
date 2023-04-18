@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
+import {useSelector, useDispatch} from "react-redux"
+import {setSort} from "..//redux/slices/filterSlice"
 
-function Sort({valueStateTwo,clickToSort}) {
+function Sort() {
+
+
+  const dispatch = useDispatch()
+  const sort  = useSelector((state)=> state.filter.sort)
 
   const typesSort = [
     {name: "популярности(DESK)", sortItems: "rating"},
@@ -13,8 +19,8 @@ function Sort({valueStateTwo,clickToSort}) {
 
   const [openModal, setOpenModal] = useState(false)
 
-  const selectCategoty = (i) => {
-    clickToSort(i)
+  const selectCategoty = (obj) => {
+    dispatch(setSort(obj))
     setOpenModal(false)
   }
 
@@ -36,7 +42,7 @@ function Sort({valueStateTwo,clickToSort}) {
                 />
               </svg>
               <b>Сортировка по:</b>
-              <span onClick={() => setOpenModal(!openModal)}>{valueStateTwo.name}</span>
+              <span onClick={() => setOpenModal(!openModal)}>{sort.name}</span>
             </div>
             {openModal && (<div className="sort__popup">
               <ul>
@@ -45,7 +51,7 @@ function Sort({valueStateTwo,clickToSort}) {
                     <li
                     key={index}
                     onClick={()=> selectCategoty(obj)}
-                    className={valueStateTwo.sortItems === obj.sortItems ? "active" : ''}
+                    className={sort.sortItems === obj.sortItems ? "active" : ''}
                     >{obj.name}</li>
                   ))
                 }
