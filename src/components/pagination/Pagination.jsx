@@ -2,7 +2,7 @@ import React from 'react'
 import ReactPaginate from 'react-paginate';
 import classes from "./pagination.module.scss"
 
-function Pagination({onChangePages}) {
+function Pagination({changesPage,onChangePages}) {
 
  
 
@@ -16,6 +16,7 @@ function Pagination({onChangePages}) {
         onPageChange={(event)=>onChangePages(event.selected + 1)}
         pageRangeDisplayed={4}
         pageCount={3}
+        forcePage={changesPage -1}
         renderOnZeroPageCount={null}
       />
     </div>
