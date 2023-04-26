@@ -1,21 +1,24 @@
-import React, { useState } from 'react'
+import React, { useState ,useRef,useEffect} from 'react'
 import {useSelector, useDispatch} from "react-redux"
 import {setSort} from "..//redux/slices/filterSlice"
+
+
+export const typesSort = [
+  {name: "популярности(DESK)", sortItems: "rating"},
+  {name: "популярности(ASK)", sortItems: "-rating"},
+  {name: "цене(DESK)", sortItems: "price"},
+  {name: "цене(ASK)", sortItems: "-price"},
+  {name: "алфавиту(DESK)", sortItems: "title"},
+  {name: "алфавиту(ASK)", sortItems: "-title"}
+]
 
 function Sort() {
 
 
   const dispatch = useDispatch()
   const sort  = useSelector((state)=> state.filter.sort)
+  const sortRef = useRef()
 
-  const typesSort = [
-    {name: "популярности(DESK)", sortItems: "rating"},
-    {name: "популярности(ASK)", sortItems: "-rating"},
-    {name: "цене(DESK)", sortItems: "price"},
-    {name: "цене(ASK)", sortItems: "-price"},
-    {name: "алфавиту(DESK)", sortItems: "title"},
-    {name: "алфавиту(ASK)", sortItems: "-title"}
-  ]
 
   const [openModal, setOpenModal] = useState(false)
 
@@ -24,10 +27,27 @@ function Sort() {
     setOpenModal(false)
   }
 
- 
+
+  useEffect(() => {
+    console.log("amount start")
+    const clickToWindow = (event) => {
+      if (sortRef && !sortRef.current.contains(event.target)) {
+        setOpenModal(false);
+        console.log("Очистить здесь ");
+      }
+    };
+  
+    document.body.addEventListener("click", clickToWindow);
+  
+    return () => {
+      document.body.removeEventListener("click", clickToWindow);
+      console.log("amount end")
+    };
+  }, []);
+
 
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
             <div className="sort__label">
               <svg
                 width="10"

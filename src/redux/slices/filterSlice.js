@@ -9,12 +9,14 @@ const initialState = {
   changePage: 0
 }
 
+
+
+
 const filterSlice = createSlice({
   name: "filter",
   initialState,
    reducers:{
       setCategoryId(state,actions){
-           console.log("ClICK ME",actions)
            state.categotyID = actions.payload
       },
       setSort(state,actions) {
@@ -23,9 +25,13 @@ const filterSlice = createSlice({
       ,
       setChangePages(state,actions) {
         state.changePage = actions.payload
+      },
+      setParsPage(state,actions) { state.sort = actions.payload.sort
+        state.changePage = Number(actions.payload.changePage)
+        state.categotyID = Number(actions.payload.categotyID)
       }
    }
 })
 
-export const {setCategoryId,setSort,setChangePages} = filterSlice.actions
+export const {setCategoryId,setSort,setChangePages,setParsPage} = filterSlice.actions
 export default filterSlice.reducer
