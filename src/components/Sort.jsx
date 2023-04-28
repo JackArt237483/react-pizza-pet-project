@@ -33,7 +33,6 @@ function Sort() {
     const clickToWindow = (event) => {
       if (sortRef && !sortRef.current.contains(event.target)) {
         setOpenModal(false);
-        console.log("Очистить здесь ");
       }
     };
   

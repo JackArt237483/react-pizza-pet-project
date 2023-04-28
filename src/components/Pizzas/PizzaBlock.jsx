@@ -11,7 +11,7 @@ const [activeSize, setActiveSize] = useState(0)
 
 const typeNamesPizza = ['тонкое', 'традиционное']
 
-console.log(addItem)
+
 
 const addObj = addItem ? addItem.count : 0
 
