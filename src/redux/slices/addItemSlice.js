@@ -43,8 +43,9 @@ const addItemSlice =  createSlice ({
   }
 })
 
-
-export const selectId = (id) => (state) => state.cart.items.find((obj) => obj.id === id)
+export const selectSort = ((state) => state.cart)
+export const selectItemById = (id) => (state) => state.cart.items.find((obj) => obj.id === id)
+//фцнкция которая вернет тебе один обьект и найдет его есть ли она в корзине 
 
 export const {addItems,clearItems,removeItems, minusItem} = addItemSlice.actions
 export default addItemSlice.reducer

@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector} from 'react-redux'
-import {addItems,selectId} from "..//..//redux/slices/addItemSlice"
+import {addItems,selectItemById} from "..//..//redux/slices/addItemSlice"
 
 function PizzaBlock({id,title, price,imageUrl,sizes,types,count}) {
 
 const dispatch = useDispatch()
-const addItem = useSelector(selectId(id))
+const addItem = useSelector(selectItemById(id))
 const [activeType, setActiveType] = useState(0)
 const [activeSize, setActiveSize] = useState(0)
 

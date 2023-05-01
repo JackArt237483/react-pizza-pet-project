@@ -3,12 +3,11 @@ import { useSelector } from 'react-redux'
 import pizza_logo from "../assets/img/pizza-logo.svg"
 import {Link} from "react-router-dom"
 import Search from './search/Search'
+import { selectSort } from '../redux/slices/addItemSlice'
 
 function Header() {
 
- const items = useSelector(state => state.cart.items)
- const totalPrizee = useSelector(state => state.cart.totalPrizee)
-
+ const {items,totalPrizee} = useSelector(selectSort)
 
  const total =  items.reduce((sum ,item)=> sum + item.count, 0)
 

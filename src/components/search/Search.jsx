@@ -1,26 +1,28 @@
 import React, { useRef,useState,useCallback }  from 'react'
 import debounce from "lodash.debounce"
 import classes from "./search.module.scss"
+import { useDispatch } from 'react-redux'
+import {setSearchValue} from "../../redux/slices/filterSlice"
 import search from "..//..//assets/img/search_FILL0_wght400_GRAD0_opsz48 (1).svg"
 import deleteValue from "..//..//assets/img/DELETE.svg"
-import { AppHead } from '../../App'
 
 
 
 function Search() {
 
+  const dispatch = useDispatch()
   const [value, setValue] = useState("")
-  const {setSearchValue} = React.useContext(AppHead)
   const myInputRef = useRef()
 
   const searchInput = () => {
     setValue("")
-    setSearchValue("")
+    dispatch(setSearchValue(""))
     myInputRef.current.focus()
   }
 
-  const inputValue = useCallback(debounce((str)=>{
-     setSearchValue(str)
+  const inputValue = useCallback(debounce
+    ((str)=>{
+    dispatch(setSearchValue(str))
   },1000),
     []
   )

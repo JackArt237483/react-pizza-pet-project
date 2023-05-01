@@ -8,24 +8,23 @@ import PizzaBlock from "../components/Pizzas/PizzaBlock"
 import SkeletonPizza from "../components/Pizzas/SkeletonPizza";
 import Sort, { typesSort } from "../components/Sort";
 import Pagination from '../components/pagination/Pagination';
-import { AppHead } from '../App';
 import { useNavigate } from 'react-router-dom';
-import { FetchPizzas} from '../redux/slices/pizzaSlice';
+import { FetchPizzas, selectedPizza} from '../redux/slices/pizzaSlice';
 
 
 function Home() {
 
   const dispatch = useDispatch()
-  const {items, status} = useSelector((state)=> state.pizza)
+  const {items, status} = useSelector(selectedPizza)
   const navigate = useNavigate()
   const isSearch = useRef(false);
   const isMound =  useRef(false)
   const categotyID = useSelector((state)=> state.filter.categotyID)
   const sortType = useSelector((state)=> state.filter.sort.sortItems)
   const changePage = useSelector((state)=> state.filter.changePage)
+  const searchValue = useSelector((state)=> state.filter.searchValue)
 
   
-  const {searchValue} = React.useContext(AppHead)
 
     const clickToValueCategory = (obj) => {
       dispatch(setCategoryId(obj))
@@ -90,14 +89,14 @@ function Home() {
           />
           <Sort/>
         </div>
-        <h2 className="content__title">Все пиццы</h2>
+        <h2 style={{marginTop: "40px"}} className="content__title">Все пиццы</h2>
         {
           status === "error" ?(  <div className="content__error-info">
                     <h2>Произошла ошибка 😕</h2>
                     <p>К сожалению, не удалось получить питсы. Попробуйте повторить попытку позже.</p>
                 </div>
           ) : (
-            <div className="content__items">
+            <div style={{marginTop: '25px'}} className="content__items">
             {
              status === "loanding"
               ? Array(9).fill().map((_,index)=><SkeletonPizza key={index}/>)

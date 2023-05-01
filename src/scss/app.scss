@@ -31,6 +31,7 @@ body {
     text-align: center;
 
     h2 {
+      margin-top: 25px;
       font-size: 32px;
       font-weight: 700;
       margin-bottom: 10px;
@@ -110,7 +111,8 @@ body {
     max-width: 820px;
     margin: 90px auto;
     .content__title {
-      margin: 0;
+      
+    margin-top: 25px;
     }
   }
 }
