@@ -20,8 +20,8 @@ function Search() {
     myInputRef.current.focus()
   }
 
-  const inputValue = useCallback(debounce
-    ((str)=>{
+  const inputValue = useCallback(
+    debounce((str)=>{
     dispatch(setSearchValue(str))
   },1000),
     []

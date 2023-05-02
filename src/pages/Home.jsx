@@ -1,6 +1,7 @@
 import React, { useRef } from 'react'
 import { useEffect } from "react";
 import {useSelector,useDispatch} from "react-redux"
+import {Link} from 'react-router-dom'
 import qs from "qs"
 import {setCategoryId,setChangePages} from '..//redux/slices/filterSlice'
 import Categories from "../components/Categories"
@@ -105,9 +106,9 @@ function Home() {
                    return true
                   }
                    return false
-                 }) 
-                .map((index,value) => (<PizzaBlock key={value} {... index}
-                />
+                 }).map((index,value) => ( <Link key={value} to={`/pizza/${index.id}`}>
+                  <PizzaBlock  {... index}/>
+                  </Link>
               ))
             }
           </div>
@@ -122,4 +123,5 @@ function Home() {
 export default Home
 
 
- 
+
+

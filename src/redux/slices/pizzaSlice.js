@@ -12,12 +12,9 @@ console.log(ThunkApi)
     &sortBy=${sortType.replace('-', '')}
     &order=${sortType.includes('-') ? 'asc' : 'desc' }`)
         return data 
-
-        
     }
   )
   
-
 const  initialState = {
   items: [],
   status: 'loanding',   // loanding || success || error
